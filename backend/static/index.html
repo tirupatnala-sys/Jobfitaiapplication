@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CareerMatch AI</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f7fb;--card:#fff;--tx:#1b2333;--mu:#667;--pr:#4f46e5;--ok:#15803d;--bad:#b45309;--bd:#e3e7f0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1420;--card:#182031;--tx:#e8ecf5;--mu:#9aa5bd;--bd:#2a344a;--pr:#818cf8;--ok:#4ade80;--bad:#fbbf24}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:24px 16px;text-align:center}h1{margin:0 0 4px;font-size:1.6rem}header p{margin:0;color:var(--mu)}
+main{max-width:1050px;margin:auto;padding:0 16px 40px;display:grid;gap:16px;grid-template-columns:320px 1fr;align-items:start}
+@media(max-width:780px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}
+label{display:block;font-size:.8rem;color:var(--mu);margin:12px 0 4px}
+input,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.box{position:relative}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chip{background:var(--pr);color:#fff;border-radius:99px;padding:3px 6px 3px 10px;font-size:.8rem;display:flex;gap:6px;align-items:center}
+.chip b{cursor:pointer;font-weight:400;opacity:.8}
+#dd{position:absolute;left:0;right:0;top:100%;z-index:5;background:var(--card);border:1px solid var(--bd);border-radius:8px;max-height:260px;overflow:auto;display:none;box-shadow:0 8px 24px #0003}
+#dd div{padding:8px 10px;cursor:pointer;font-size:.9rem}#dd div.on,#dd div:hover{background:var(--pr);color:#fff}
+.top{display:flex;justify-content:space-between;gap:8px}.top h3{margin:0;font-size:1.05rem}
+.pct{font-weight:700;color:var(--pr);font-size:1.25rem;white-space:nowrap}.mu{color:var(--mu);font-size:.85rem}
+.bar{height:7px;background:var(--bd);border-radius:6px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--pr)}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.75rem;margin:2px 3px 2px 0;border:1px solid var(--bd)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}ul{margin:6px 0;padding-left:18px;font-size:.85rem}
+#list{display:grid;gap:12px}button{background:var(--pr);color:#fff;border:0;border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit;font-size:.8rem}
+.empty{text-align:center;color:var(--mu);padding:30px}nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 16px 16px}nav button{background:var(--card);color:var(--tx);border:1px solid var(--bd);padding:8px 16px;font-size:.9rem}nav button.on{background:var(--pr);color:#fff}main.view{display:none}main.view.on{display:grid}main.one{grid-template-columns:1fr}textarea{width:100%;min-height:90px;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}.trust{color:var(--ok);font-size:.75rem;font-weight:600}
+</style></head><body>
+<header><h1>CareerMatch AI</h1><p>Type a language or skill, and matching jobs appear instantly.</p></header>
+<nav><button data-v="search" class="on">🔍 Job Search</button><button data-v="resume">📄 Resume Match</button><button data-v="saved">⭐ Saved (<span id="n-saved">0</span>)</button><button data-v="applied">✅ Applications (<span id="n-applied">0</span>)</button></nav>
+<main id="v-search" class="view on">
+<section class="card">
+<label style="margin-top:0">Languages &amp; skills (type to search, up to 20 suggestions)</label>
+<div class="chips" id="chips"></div>
+<div class="box"><input id="q" autocomplete="off" placeholder="e.g. py, java, c…"><div id="dd" role="listbox"></div></div>
+<label>Preferred role</label><input id="role" list="roles" placeholder="e.g. Backend Developer"><datalist id="roles"></datalist>
+<label>Experience (years)</label><input id="exp" type="number" min="0" step="0.5" value="1">
+<label>Job type</label><select id="jt"><option value="">Any</option><option>Full-time</option><option>Internship</option></select>
+<label>Posted within</label><select id="win"><option value="24">Last 24 hours</option><option value="72" selected>Last 3 days</option></select>
+<label>Location</label><select id="loc"><option value="">Any</option><option>Hyderabad</option><option>Bangalore</option><option>Chennai</option><option>Remote</option></select>
+<button id="go" style="width:100%;margin-top:16px;padding:12px;font-size:1rem">Find jobs</button>
+<p class="mu" style="font-size:.75rem;margin-top:14px">Match % is a compatibility score from TF-IDF + cosine similarity plus experience, location, role and job-type checks. It is not a hiring probability.</p>
+</section>
+<section id="list"><div class="card empty">Add your skills, role and preferences, then click <b>Find jobs</b>.</div></section>
+</main>
+<main id="v-resume" class="view"><section class="card"><b>Upload your resume</b>
+<label>PDF or TXT (from your device or Google Drive via the file picker)</label><input id="rfile" type="file" accept=".pdf,.txt">
+<label>…or paste resume text</label><textarea id="rtext" placeholder="Paste your resume here"></textarea>
+<label>Posted within</label><select id="rwin"><option value="24">Last 24 hours</option><option value="72" selected>Last 3 days</option></select>
+<button id="ranalyse" style="width:100%;margin-top:14px;padding:12px">Analyse resume &amp; find jobs</button>
+<button id="rsample" style="width:100%;margin-top:8px;background:var(--bd);color:var(--tx)">Try a sample resume</button>
+<p class="mu" style="font-size:.75rem">Only jobs from verified (trusted) companies are shown. Files are read in memory and not stored.</p></section>
+<section id="rres"><div class="card empty">Upload a resume to see matching jobs.</div></section></main>
+<main id="v-saved" class="view one"><section id="l-saved"></section></main>
+<main id="v-applied" class="view one"><section id="l-applied"></section></main>
+<script>
+const LANGS="Python,Java,JavaScript,TypeScript,C,C++,C#,Go,Rust,Kotlin,Swift,PHP,Ruby,Scala,R,MATLAB,Dart,Perl,Lua,Haskell,Elixir,Clojure,COBOL,SQL,HTML,CSS,Bash,PowerShell,Objective-C,Julia,Flask,Django,FastAPI,React,Angular,Vue,Node.js,Spring Boot,Docker,Kubernetes,AWS,Git,Linux,MySQL,PostgreSQL,MongoDB,Pandas,NumPy,Scikit-learn,TensorFlow,REST API,Excel".split(",");
+const H=[2,10,20,30,50,70,90,120,5,40];
+const TR=new Set(["ABC Technologies","InsightIQ","CloudNine","FinServe","ScaleOps","NeuralNest"]);
+const JOBS=[
+["Python Backend Developer","ABC Technologies","Build REST APIs with Flask and SQL databases.","Hyderabad","Full-time",0,"₹5–8 LPA","Python,Flask,SQL,REST API,Git"],
+["Frontend Developer","PixelWorks","Build responsive UIs with React and CSS.","Bangalore","Full-time",1,"₹6–10 LPA","React,JavaScript,CSS,HTML,Git"],
+["Data Analyst","InsightIQ","Analyse data using SQL, Pandas and dashboards.","Hyderabad","Full-time",1,"₹5–9 LPA","Python,SQL,Pandas,Excel"],
+["DevOps Engineer","CloudNine","Automate CI/CD and manage AWS infrastructure.","Remote","Full-time",2,"₹9–15 LPA","Docker,AWS,Linux,Git,Python"],
+["Full Stack Developer","StackLoop","Work on Flask backends and JavaScript frontends.","Chennai","Full-time",1,"₹7–12 LPA","Python,Flask,JavaScript,SQL,Docker"],
+["Java Backend Developer","FinServe","Build Spring Boot microservices for payments.","Bangalore","Full-time",2,"₹10–16 LPA","Java,Spring Boot,SQL,Docker,Git"],
+["React Native Developer","AppForge","Ship mobile apps with React and TypeScript.","Remote","Full-time",1,"₹8–13 LPA","React,TypeScript,JavaScript,Git"],
+["PHP Web Developer","WebNest","Maintain PHP and MySQL websites.","Chennai","Full-time",0,"₹3–5 LPA","PHP,MySQL,HTML,CSS,JavaScript"],
+["Go Platform Engineer","ScaleOps","Build Go services on Kubernetes.","Hyderabad","Full-time",3,"₹16–26 LPA","Go,Kubernetes,Docker,Linux,AWS"],
+["ML Engineer Intern","NeuralNest","Assist in building scikit-learn models.","Remote","Internship",0,"₹2–3 LPA","Python,Scikit-learn,Pandas,NumPy"]
+].map((r,i)=>({id:i,title:r[0],company:r[1],description:r[2],location:r[3],job_type:r[4],exp_min:r[5],salary:r[6],skills:r[7].split(","),trusted:TR.has(r[1]),posted:new Date(Date.now()-H[i]*36e5).toISOString()}));
+const ago=p=>{const h=Math.max(1,Math.round((Date.now()-new Date(p))/36e5));return h<24?h+"h ago":Math.round(h/24)+"d ago"};
+const $=id=>document.getElementById(id);let sel=[],hi=-1,items=[],apiOK=true,seq=0;
+$("roles").innerHTML=JOBS.map(j=>`<option value="${j.title}">`).join("");
+const tok=t=>(t.toLowerCase().match(/[a-z0-9+#.]+/g)||[]);
+function tfidf(docs){const N=docs.length,df={};docs.forEach(d=>new Set(d).forEach(w=>df[w]=(df[w]||0)+1));return docs.map(d=>{const tf={},v={};d.forEach(w=>tf[w]=(tf[w]||0)+1);for(const w in tf)v[w]=tf[w]*(Math.log((1+N)/(1+df[w]))+1);return v})}
+function cos(a,b){let d=0,x=0,y=0;for(const k in a){x+=a[k]*a[k];if(b[k])d+=a[k]*b[k]}for(const k in b)y+=b[k]*b[k];return x&&y?d/Math.sqrt(x*y):0}
+function localSuggest(q){q=q.toLowerCase();const ok=s=>!sel.includes(s);return[...LANGS.filter(s=>ok(s)&&s.toLowerCase().startsWith(q)),...LANGS.filter(s=>ok(s)&&!s.toLowerCase().startsWith(q)&&s.toLowerCase().includes(q))].slice(0,20)}
+async function suggest(q){if(apiOK){try{const r=await fetch("/skills/suggest?q="+encodeURIComponent(q));if(!r.ok)throw 0;return(await r.json()).filter(s=>!sel.includes(s))}catch(e){apiOK=false}}return localSuggest(q)}
+function localMatch(u){const us=new Set(u.skills.map(s=>s.toLowerCase())),docs=JOBS.map(j=>tok(j.title+" "+j.description+" "+j.skills.join(" ")+" "+j.skills.join(" ")));
+ const vs=tfidf([...docs,tok(u.skills.join(" ")+" "+u.skills.join(" "))]),qv=vs.at(-1),tv=tfidf([...JOBS.map(j=>tok(j.title)),tok(u.roles)]),rv=tv.at(-1);
+ return JOBS.map((j,i)=>{const matched=j.skills.filter(s=>us.has(s.toLowerCase())),missing=j.skills.filter(s=>!us.has(s.toLowerCase()));
+  const sk=.6*cos(qv,vs[i])+.4*matched.length/j.skills.length,e=Math.max(0,1-Math.max(0,j.exp_min-u.exp)/3),l=(!u.location||j.location===u.location||j.location==="Remote")?1:0,p=(!u.job_type||u.job_type===j.job_type)?1:0;
+  const why=matched.map(m=>m+" matches your profile");if(u.location&&l)why.push(j.location+" matches your preference");if(e===1)why.push("Experience level matches");
+  return{...j,matched,missing,why,match:Math.round((.5*sk+.2*e+.1*l+.1*(u.roles?cos(rv,tv[i]):0)+.1*p)*100)}}).filter(r=>r.match>=20&&Date.now()-new Date(r.posted)<=u.within_hours*36e5&&(!u.trusted_only||r.trusted)).sort((a,b)=>b.match-a.match)}
+async function match(){const u={skills:sel,roles:$("role").value,exp:+$("exp").value||0,location:$("loc").value,job_type:$("jt").value,within_hours:+$("win").value},my=++seq;let res;
+ if(!sel.length&&!u.roles){$("list").innerHTML='<div class="card empty">Start typing a language such as “py” to see jobs.</div>';return}
+ if(apiOK){try{const r=await fetch("/match",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(u)});if(!r.ok)throw 0;res=(await r.json()).results}catch(e){apiOK=false}}
+ if(!res)res=localMatch(u);if(my!==seq)return;res.forEach(r=>known[r.id]=r);
+ $("list").innerHTML=res.length?`<div class="mu">${res.length} suitable job${res.length>1?"s":""} found</div>`+res.map(r=>`<article class="card"><div class="top"><div><h3>${r.title}</h3><div class="mu">${r.company} · ${r.location} · ${r.job_type} · ${r.exp_min}+ yrs · ${r.salary} · posted ${ago(r.posted)}</div></div><div class="pct">${r.match}%</div></div><div class="bar"><i style="width:${r.match}%"></i></div>
+ <b style="font-size:.85rem">Why this job?</b><ul class="ok">${r.why.map(w=>"<li>✓ "+w+"</li>").join("")}</ul>
+ ${r.missing.length?`<div class="bad" style="font-size:.85rem"><b>Skills to improve:</b> ${r.missing.map(m=>`<span class="tag">${m}</span>`).join("")}</div>`:""}
+ <div style="margin-top:8px"><button onclick="act(${r.id},'saved',this)">Save</button> <button onclick="act(${r.id},'applied',this)">Apply</button></div></article>`).join(""):'<div class="card empty">No suitable jobs posted in this time window. Try Last 3 days or add more skills.</div>'}
+function chips(){$("chips").innerHTML=sel.map((s,i)=>`<span class="chip">${s}<b onclick="rm(${i})">×</b></span>`).join("")}
+function rm(i){sel.splice(i,1);chips()}
+function add(s){if(s&&!sel.includes(s))sel.push(s);$("q").value="";$("dd").style.display="none";chips();$("q").focus()}
+function drop(){$("dd").innerHTML=items.map((s,i)=>`<div class="${i===hi?"on":""}" data-s="${s}">${s}</div>`).join("");$("dd").style.display=items.length?"block":"none"}
+$("q").addEventListener("input",async e=>{const q=e.target.value.trim();if(!q){items=[];return drop()}items=await suggest(q);hi=0;drop()});
+$("q").addEventListener("keydown",e=>{if(e.key==="ArrowDown"){hi=Math.min(hi+1,items.length-1);drop();e.preventDefault()}else if(e.key==="ArrowUp"){hi=Math.max(hi-1,0);drop();e.preventDefault()}else if(e.key==="Enter"&&items[hi]){add(items[hi]);e.preventDefault()}else if(e.key==="Backspace"&&!e.target.value&&sel.length)rm(sel.length-1)});
+$("dd").addEventListener("mousedown",e=>{const s=e.target.dataset.s;if(s){e.preventDefault();add(s)}});
+$("q").addEventListener("blur",()=>$("dd").style.display="none");
+$("go").onclick=match;
+sel=["Python","Flask"];chips();
+const known={},state={saved:{},applied:{}};
+function show(v){document.querySelectorAll("main.view").forEach(m=>m.classList.toggle("on",m.id==="v-"+v));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));if(v==="saved"||v==="applied")lst(v)}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.v));
+function counts(){$("n-saved").textContent=Object.keys(state.saved).length;$("n-applied").textContent=Object.keys(state.applied).length}
+function act(id,k,btn){state[k][id]=known[id];if(btn)btn.textContent=(k==="saved"?"Saved":"Applied")+" ✓";counts()}
+function card(r,extra){return `<article class="card"><div class="top"><div><h3>${r.title}</h3><div class="mu">${r.company} ${r.trusted?'<span class="trust">✔ Trusted</span>':""} · ${r.location} · ${r.job_type} · ${r.salary} · posted ${ago(r.posted)}</div></div><div class="pct">${r.match!=null?r.match+"%":""}</div></div>${r.why?`<ul class="ok">${r.why.map(w=>"<li>✓ "+w+"</li>").join("")}</ul>`:""}${r.missing&&r.missing.length?`<div class="bad" style="font-size:.85rem"><b>Skills to improve:</b> ${r.missing.map(m=>`<span class="tag">${m}</span>`).join("")}</div>`:""}<div style="margin-top:8px">${extra||`<button onclick="act(${r.id},'saved',this)">Save</button> <button onclick="act(${r.id},'applied',this)">Apply</button>`}</div></article>`}
+function lst(k){const a=Object.values(state[k]);$("l-"+k).innerHTML=a.length?a.map(r=>card(r,k==="saved"?`<button onclick="act(${r.id},'applied',this)">Apply</button> <button onclick="delete state.saved[${r.id}];counts();lst('saved')">Remove</button>`:'<span class="ok">Status: Applied</span>')).join(""):'<div class="card empty">Nothing here yet.</div>'}
+const SAMPLE="Asha K. Backend developer with 2 years experience. Skills: Python, Flask, SQL, MySQL, Docker, Git, REST API, Pandas. Based in Hyderabad.";
+function extract(t){const low=t.toLowerCase(),esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");const skills=LANGS.filter(s=>new RegExp("(?<![a-z0-9+#])"+esc(s.toLowerCase())+"(?![a-z0-9+#])").test(low));const y=[...low.matchAll(/(\d+(?:\.\d+)?)\+?\s*(?:years|yrs)/g)].map(x=>+x[1]);return{skills,exp:y.length?Math.max(...y):0,location:["Hyderabad","Bangalore","Chennai","Remote"].find(l=>low.includes(l.toLowerCase()))||""}}
+async function analyse(file){const win=+$("rwin").value,out=$("rres");let text=$("rtext").value,res,p;
+ if(file){if(apiOK){try{const fd=new FormData();fd.append("resume",file);fd.append("within_hours",win);const r=await fetch("/resume/upload",{method:"POST",body:fd}),j=await r.json();if(!r.ok){out.innerHTML=`<div class="card empty bad">${j.error}</div>`;return}p=j.profile;res=j.results}catch(e){apiOK=false}}
+  if(!res){if(/\.txt$/i.test(file.name))text=await file.text();else{out.innerHTML='<div class="card empty">PDF parsing runs on the Flask backend. In this demo, upload a .txt file or paste your resume text.</div>';return}}}
+ if(!res){if(text.trim().length<30){out.innerHTML='<div class="card empty">Paste or upload a resume first.</div>';return}p=extract(text);res=localMatch({skills:p.skills,roles:"",exp:p.exp,location:p.location,job_type:"",within_hours:win,trusted_only:true})}
+ res.forEach(r=>known[r.id]=r);
+ out.innerHTML=`<div class="card"><b>Detected from your resume</b><div style="margin-top:6px">${p.skills.map(s=>`<span class="chip" style="display:inline-flex;margin:2px">${s}</span>`).join("")||'<span class="mu">No known skills found</span>'}</div><div class="mu" style="margin-top:6px">Experience: ${p.exp} yrs · Location: ${p.location||"not found"}</div></div>`+(res.length?`<div class="mu">${res.length} trusted-company job${res.length>1?"s":""} posted in the last ${win===24?"24 hours":"3 days"}</div>`+res.map(r=>card(r)).join(""):'<div class="card empty">No trusted-company jobs matched in this window. Try Last 3 days.</div>')}
+$("rfile").onchange=()=>analyse($("rfile").files[0]);
+$("ranalyse").onclick=()=>analyse($("rfile").files[0]);
+$("rsample").onclick=()=>{$("rfile").value="";$("rtext").value=SAMPLE;analyse()};
+</script></body></html>

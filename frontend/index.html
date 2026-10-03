@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="JobMatch AI: upload your resume, discover matching job roles, see missing skills and get a personal career roadmap.">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="JobMatch AI - Smart Job Recommendation &amp; Career Platform">
+<meta property="og:description" content="Upload your resume, find matching roles, spot missing skills and follow a learning roadmap.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%BC%3C/text%3E%3C/svg%3E">
+<title>JobMatch AI — Smart Job Recommendation & Career Platform</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f8fe;--card:#fff;--tx:#0f1b33;--mu:#5b6885;--pr:#2563eb;--pr2:#1d4ed8;--soft:#e8f0fe;--bd:#dfe6f3;--ok:#0f7a4a;--okb:#e3f7ec;--bad:#b4321f;--badb:#fdebe8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1220;--card:#131c30;--tx:#e8eefb;--mu:#9aa8c7;--pr:#5b8cff;--pr2:#7aa2ff;--soft:#1b2a4a;--bd:#25324d;--ok:#4ade80;--okb:#12301f;--bad:#ff8f7d;--badb:#3a1b17}}
+:root[data-theme="dark"]{--bg:#0b1220;--card:#131c30;--tx:#e8eefb;--mu:#9aa8c7;--pr:#5b8cff;--pr2:#7aa2ff;--soft:#1b2a4a;--bd:#25324d;--ok:#4ade80;--okb:#12301f;--bad:#ff8f7d;--badb:#3a1b17}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;background:var(--bg);color:var(--tx);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.5}
+a{color:inherit;text-decoration:none}.w{max-width:1100px;margin:auto;padding:0 18px}
+header{background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.nav{display:flex;align-items:center;gap:6px;padding:12px 0;flex-wrap:wrap}.logo{font-weight:800;font-size:1.2rem;margin-right:auto}.logo b{color:var(--pr)}
+.nav a{padding:6px 11px;border-radius:8px;font-size:.88rem;color:var(--mu)}.nav a:hover,.nav a.on{background:var(--soft);color:var(--pr)}
+.btn{background:var(--pr);color:#fff;border:0;border-radius:10px;padding:10px 20px;font:inherit;font-weight:600;cursor:pointer;display:inline-block;font-size:.92rem}
+.btn:hover{background:var(--pr2)}.btn.g{background:var(--soft);color:var(--pr)}.btn.s{padding:6px 13px;font-size:.82rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:14px}
+h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.12;margin:0 0 14px}h2{margin:0 0 14px}h3{margin:0 0 8px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:50px 0}@media(max-width:800px){.hero{grid-template-columns:1fr}}
+.hero p{color:var(--mu);font-size:1.1rem;margin:0 0 22px}.hero em{font-style:normal;color:var(--pr)}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.step{text-align:center}.step i{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--pr);color:#fff;font-style:normal;font-weight:700;margin-bottom:8px}
+.stat b{display:block;font-size:2rem;color:var(--pr)}.mu{color:var(--mu);font-size:.88rem}
+.chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.78rem;margin:2px 4px 2px 0;font-weight:500}.have{background:var(--okb);color:var(--ok)}.miss{background:var(--badb);color:var(--bad);border:1px dashed var(--bad)}
+.badge{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;background:var(--soft);color:var(--pr);margin-right:5px;font-weight:600}
+.top{display:flex;justify-content:space-between;gap:12px}.pct{font-size:1.4rem;font-weight:800;color:var(--pr);text-align:right;white-space:nowrap}
+.bar{height:7px;border-radius:6px;background:var(--bd);overflow:hidden;margin:9px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pr),#22c1c3)}
+input,select{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}label{display:block;font-size:.8rem;color:var(--mu);margin:12px 0 4px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}.form{max-width:420px;margin:40px auto}
+.steps{display:flex;gap:4px;margin:10px 0}.steps span{flex:1;text-align:center;font-size:.68rem;padding:5px 2px;border-radius:6px;background:var(--bd);color:var(--mu)}.steps span.d{background:var(--pr);color:#fff}
+.empty{text-align:center;color:var(--mu);padding:34px}footer{text-align:center;color:var(--mu);font-size:.8rem;padding:30px 0}
+.drop{border:2px dashed var(--pr);border-radius:16px;background:var(--bg);padding:34px 16px;text-align:center;cursor:pointer}.drop.over{background:var(--soft)}
+.how-h{text-align:center;margin:34px 0 22px}.how-h h2{margin:0 0 6px;font-size:1.9rem}.how-h p{margin:0;color:var(--mu)}
+.how{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}@media(max-width:960px){.how{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.how{grid-template-columns:1fr}}
+.hs{position:relative;opacity:0}.hs.in{animation:up .65s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*130ms)}
+@keyframes up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.hc{display:block;height:100%;cursor:pointer;text-align:center;padding:24px 14px 18px;border-radius:16px;background:var(--card);border:1px solid var(--bd);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;position:relative}
+.hc:hover,.hc:focus-visible{transform:translateY(-8px);box-shadow:0 16px 34px rgba(37,99,235,.2);border-color:var(--pr);outline:none}.hc:active{transform:translateY(-3px)}
+.ico{width:58px;height:58px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;font-size:1.7rem;background:linear-gradient(135deg,var(--pr),#22c1c3);animation:ring 2.6s ease-out infinite;transition:transform .3s}
+.hc:hover .ico{transform:scale(1.12) rotate(-6deg)}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(37,99,235,.45)}70%,100%{box-shadow:0 0 0 14px rgba(37,99,235,0)}}
+.num{position:absolute;top:10px;left:12px;font-size:.72rem;font-weight:800;color:var(--pr);background:var(--soft);border-radius:99px;padding:2px 8px}
+.hc b{display:block;margin-bottom:4px}.hc .d{color:var(--mu);font-size:.84rem}
+.hc .go{display:inline-block;margin-top:10px;font-size:.8rem;font-weight:700;color:var(--pr);opacity:0;transform:translateX(-6px);transition:.25s}.hc:hover .go,.hc:focus-visible .go{opacity:1;transform:none}
+@media(min-width:961px){.hs:not(:last-child)::after{content:"";position:absolute;top:53px;left:calc(50% + 38px);width:calc(100% - 76px + 16px);height:2px;background:linear-gradient(90deg,var(--pr),rgba(37,99,235,.1));transform:scaleX(0);transform-origin:left;z-index:1}
+.hs.in:not(:last-child)::after{animation:line .7s ease forwards;animation-delay:calc(var(--i)*130ms + 350ms)}}
+@keyframes line{to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.hs{opacity:1}.hs.in,.ico{animation:none}.hs::after{transform:none!important}.hc,.hc .go{transition:none}}
+.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}@media(max-width:1000px){.feat{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.feat{grid-template-columns:1fr}}
+.fs{opacity:0}.fs.in{animation:up .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*90ms)}
+.fc{display:block;height:100%;cursor:pointer;padding:22px 18px 18px;border-radius:16px;background:var(--card);border:1px solid var(--bd);position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.fc::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--pr),#22c1c3);transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+.fc:hover,.fc:focus-visible{transform:translateY(-7px);box-shadow:0 16px 34px rgba(37,99,235,.2);border-color:var(--pr);outline:none}.fc:hover::before,.fc:focus-visible::before{transform:scaleX(1)}.fc:active{transform:translateY(-2px)}
+.fi{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:var(--soft);margin-bottom:12px;transition:transform .3s,background .3s}
+.fc:hover .fi{transform:scale(1.12) rotate(-6deg);background:linear-gradient(135deg,var(--pr),#22c1c3)}
+.fc h3{margin:0 0 6px;font-size:1.02rem}.fc .d{color:var(--mu);font-size:.86rem}
+.fc .ex{display:inline-block;margin-top:12px;font-size:.8rem;font-weight:700;color:var(--pr);transition:transform .25s}.fc:hover .ex{transform:translateX(5px)}
+@media (prefers-reduced-motion:reduce){.fs{opacity:1}.fs.in{animation:none}.fc,.fc::before,.fi,.ex{transition:none}}
+.back{background:var(--soft);color:var(--pr);border:0;border-radius:8px;padding:6px 12px;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;margin-right:8px;transition:.2s}.back:hover,.back:focus-visible{background:var(--pr);color:#fff;outline:none}
+#backbar .back{margin:16px 0 0;background:var(--card);color:var(--tx);border:1px solid var(--bd);display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:99px;box-shadow:0 1px 3px rgba(15,27,51,.08)}#backbar .back:hover,#backbar .back:focus-visible{background:var(--pr);color:#fff;border-color:var(--pr);transform:translateX(-3px)}
+.auth{display:grid;grid-template-columns:1fr 1fr;max-width:920px;margin:28px auto;border-radius:20px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 20px 50px rgba(15,27,51,.12);background:var(--card)}
+@media(max-width:820px){.auth{grid-template-columns:1fr;margin:16px auto}.ap-side{display:none}}
+.ap-side{background:linear-gradient(145deg,#1d4ed8,#2563eb 55%,#22c1c3);color:#fff;padding:44px 34px;display:flex;align-items:center}.ap-side h2{font-size:1.8rem;margin:0 0 10px}.ap-side p{opacity:.92;margin:0}
+.ap-side ul{list-style:none;padding:0;margin:24px 0 0}.ap-side li{margin:14px 0;display:flex;gap:10px;align-items:center}.ap-side li::before{content:"✓";background:rgba(255,255,255,.22);border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-size:.75rem;flex:none}
+.ac{padding:38px 34px}.ac h2{margin:0 0 4px;font-size:1.6rem}.ac a{color:var(--pr);font-weight:600}
+.fw{margin-top:14px}.fw label{margin:0 0 6px;font-size:.82rem;color:var(--tx);font-weight:600}
+.inp{position:relative}.ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:.95rem;opacity:.7;pointer-events:none}
+.inp input{padding:12px 44px 12px 40px;border-radius:10px;font-size:.95rem;transition:border-color .2s,box-shadow .2s}
+.inp input:focus{outline:none;border-color:var(--pr);box-shadow:0 0 0 3px var(--soft)}.fw.bad input{border-color:var(--bad)}
+.msg{color:var(--bad);font-size:.78rem;min-height:1.1em;margin-top:4px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-size:1rem;padding:6px;opacity:.7}.eye:hover{opacity:1}
+.sm{display:flex;gap:5px;margin-top:8px}.sm i{flex:1;height:5px;border-radius:4px;background:var(--bd);transition:background .3s}
+.chk{display:flex;gap:8px;align-items:center;font-size:.84rem;color:var(--mu);margin:14px 0 0;cursor:pointer}.chk input{width:auto}
+.sub{width:100%;padding:13px;font-size:1rem;margin-top:16px}.sub.load{pointer-events:none;opacity:.85}
+.sub.load::after{content:"";display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;margin-left:10px;vertical-align:-2px;animation:spn .7s linear infinite}@keyframes spn{to{transform:rotate(360deg)}}
+footer.ft{text-align:left;background:var(--card);border-top:1px solid var(--bd);margin-top:60px;padding:44px 0 22px;color:var(--tx);font-size:.9rem}
+.ft-g{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px}@media(max-width:860px){.ft-g{grid-template-columns:1fr 1fr}}@media(max-width:480px){.ft-g{grid-template-columns:1fr}}
+.ft h4{margin:0 0 12px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.ft-g a{display:block;color:var(--tx);padding:4px 0;cursor:pointer;transition:color .2s,transform .2s}.ft-g a:hover{color:var(--pr);transform:translateX(4px)}
+.ft-g p{color:var(--mu);margin:10px 0 12px;max-width:290px}
+.ft-tag{display:inline-block;background:var(--soft);color:var(--pr);border-radius:99px;padding:4px 12px;font-size:.76rem;font-weight:600}
+.ft-btn{display:block;width:100%;max-width:170px;margin-bottom:10px;background:var(--soft);color:var(--pr);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;text-align:left;transition:.2s}.ft-btn:hover{background:var(--pr);color:#fff}
+.ft-b{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--bd);margin-top:30px;padding-top:18px;color:var(--mu);font-size:.82rem}
+.dev{font-size:.95rem;color:var(--tx)}.dev b{color:var(--pr)}.heart{display:inline-block;font-style:normal;animation:beat 1.3s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.3)}30%{transform:scale(1)}45%{transform:scale(1.2)}}
+.ft-note{width:100%;font-size:.74rem;color:var(--mu);margin-top:2px}
+@media (prefers-reduced-motion:reduce){.heart{animation:none}}
+</style></head><body>
+<header><div class="w nav" id="nav"></div></header>
+<div class="w" id="backbar"></div>
+<main class="w" id="app"></main>
+<footer class="ft"><div class="w">
+<div class="ft-g">
+<div><div class="logo" style="font-size:1.25rem">JobMatch <b>AI</b></div><p>Smart job recommendations, skill-gap analysis and a personal career roadmap, all in one place.</p><span class="ft-tag">🔒 Your resume is read in your browser</span></div>
+<div><h4>Explore</h4><a href="#/jobs">Browse Jobs</a><a href="#/resume">Resume Analysis</a><a href="#/recommended">Recommended Jobs</a><a href="#/roadmap">Career Roadmap</a></div>
+<div><h4>Your Account</h4><a href="#/login">Login</a><a href="#/register">Register</a><a href="#/dashboard">Dashboard</a><a href="#/profile">My Profile</a><a href="#/saved">Saved Jobs</a><a href="#/applications">Applications</a></div>
+<div><h4>Preferences</h4><button class="ft-btn" id="thb" onclick="toggleTheme()">🌙 Dark mode</button><button class="ft-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to top</button></div>
+</div>
+<div class="ft-b"><span>© <span id="yr">2026</span> JobMatch AI. All rights reserved.</span><span class="dev">Developed by <b>Tirupatnala</b> with <i class="heart">❤️</i></span>
+<span class="ft-note">Role profiles are examples; live openings come from the linked job boards and company sites. Match % is a compatibility score, not a hiring probability.</span></div>
+</div></footer>
+<script>
+const J=[["Python Developer","Infosys, TCS, Accenture","Python,Flask,SQL,REST API,Git","Build backend services and REST APIs.",0],
+["Backend Engineer","Amazon, Microsoft, Oracle","Python,Django,PostgreSQL,Docker,AWS","Design scalable backend services.",2],
+["Java Developer","TCS, Cognizant, Capgemini","Java,Spring Boot,SQL,Docker,Git","Build enterprise services in Spring Boot.",2],
+["Frontend Developer","Accenture, Cognizant, Capgemini","React,JavaScript,HTML,CSS,Git","Build responsive user interfaces.",1],
+["Full Stack Developer","Infosys, Wipro, Tech Mahindra","React,Node.js,MongoDB,JavaScript,REST API","Build features across frontend and backend.",1],
+["Data Analyst","Deloitte, Accenture, Wipro","SQL,Excel,Python,Power BI,Data Analysis","Turn business data into dashboards and insight.",0],
+["Data Scientist","Amazon, Microsoft, Deloitte","Python,Pandas,Machine Learning,Scikit-learn,SQL","Build and evaluate predictive models.",2],
+["DevOps Engineer","Amazon, Microsoft, Oracle","Docker,Kubernetes,AWS,Linux,CI/CD,Git","Automate deployments and infrastructure.",2],
+["QA Automation Engineer","Wipro, HCLTech, Cognizant","Selenium,Java,SQL,Agile,Git","Automate web application tests.",1],
+["Software Engineer Trainee","Infosys, TCS, Wipro","Python,Java,SQL,Git,HTML","Entry-level engineering role with training.",0]
+].map((r,i)=>({id:i,title:r[0],company:r[1],loc:"India",mode:"Varies",type:"Full-time",exp:r[4],skills:r[2].split(","),desc:r[3]}));
+const PORTAL={Infosys:"https://career.infosys.com",TCS:"https://www.tcs.com/careers",Wipro:"https://careers.wipro.com",Accenture:"https://www.accenture.com/in-en/careers",Cognizant:"https://careers.cognizant.com",Capgemini:"https://www.capgemini.com/careers",Amazon:"https://www.amazon.jobs",Microsoft:"https://careers.microsoft.com",Oracle:"https://careers.oracle.com",Deloitte:"https://www.deloitte.com/in/en/careers.html","Tech Mahindra":"https://careers.techmahindra.com",HCLTech:"https://www.hcltech.com/careers"};
+const CITIES=["Hyderabad","Bangalore","Chennai","Pune","Mumbai","Delhi","Vijayawada","Visakhapatnam","Kolkata","Noida","Gurgaon"];
+const curLoc=()=>($("#city")&&$("#city").value.trim())||S.p.loc||"India";
+const slug=x=>x.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+function liveLinks(role,loc){const q=encodeURIComponent(role),l=encodeURIComponent(loc),a='target="_blank" rel="noopener noreferrer" class="btn s"';
+ return `<div class="card" style="background:var(--soft);margin-top:14px"><h3>🔴 Live openings: “${role}” in ${loc}</h3><div class="mu" style="margin-bottom:8px">These open real job-board searches limited to roughly the last 3 days, so you only see jobs that are currently posted.</div><a ${a} href="https://www.linkedin.com/jobs/search/?keywords=${q}&location=${l}&f_TPR=r259200">LinkedIn</a> <a ${a} href="https://in.indeed.com/jobs?q=${q}&l=${l}&fromage=3">Indeed India</a> <a ${a} href="https://www.naukri.com/${slug(role)}-jobs${loc==="India"?"":"-in-"+slug(loc)}">Naukri</a></div>`}
+function portals(emps){return `<div class="card"><h3>🏢 Apply on official careers pages</h3><div class="mu" style="margin-bottom:8px">Large employers that commonly hire for roles like this. Search the role on their official site and apply there.</div>${emps.split(", ").map(c=>PORTAL[c]?`<a target="_blank" rel="noopener noreferrer" class="btn s g" href="${PORTAL[c]}">${c} ↗</a> `:"").join("")}</div>`}
+const LEARN={Docker:"Containerize a small app with Docker Compose.",AWS:"Deploy a project on EC2/S3 (free tier).",Kubernetes:"Deploy an image on local minikube.","Machine Learning":"Build a scikit-learn model on a public dataset.",React:"Build a CRUD app with hooks.","Node.js":"Build a REST API with Express.",SQL:"Practice joins and aggregations.",Git:"Use branches and pull requests.","CI/CD":"Set up a GitHub Actions pipeline.",Django:"Follow the official polls tutorial.",PostgreSQL:"Design a schema and query it.",Pandas:"Analyse a CSV dataset."};
+const STAGES=["Applied","Under Review","Shortlisted","Interview","Selected"];
+const S={user:null,p:{skills:[],exp:0,loc:"",type:"",sal:""},saved:new Set(),applied:{}};
+const $=s=>document.querySelector(s),ago=h=>h<24?h+"h ago":Math.round(h/24)+"d ago";
+function score(j){const hs=new Set(S.p.skills.map(s=>s.toLowerCase())),m=j.skills.filter(s=>hs.has(s.toLowerCase())),x=j.skills.filter(s=>!hs.has(s.toLowerCase()));
+ const e=Math.max(0,1-Math.max(0,j.exp-S.p.exp)/3),l=1,t=(!S.p.type||S.p.type===j.type)?1:0;
+ const why=m.map(s=>s+" matches your profile");if(e===1)why.push("Experience level fits");if(S.p.type&&t)why.push(j.type+" matches your job type");
+ return{...j,m,x,why,pct:Math.round(100*(.5*m.length/j.skills.length+.2*e+.15*l+.15*t))}}
+const recs=()=>J.map(score).sort((a,b)=>b.pct-a.pct);
+const chips=(j)=>j.skills.map(s=>`<span class="chip ${S.p.skills.some(k=>k.toLowerCase()===s.toLowerCase())?"have":"miss"}">${s}</span>`).join("");
+function card(j,showPct=true){const pct=showPct&&S.p.skills.length;return `<div class="card"><div class="top"><div><h3><a href="#/job/${j.id}">${j.title}</a></h3><div class="mu">Commonly hired by: ${j.company} · ${j.exp}+ yrs</div><div style="margin-top:6px"><span class="badge">${j.mode}</span><span class="badge">${j.type}</span></div></div>${pct?`<div class="pct">${j.pct??score(j).pct}%<div class="mu">Match</div></div>`:""}</div><div style="margin:8px 0">${chips(j)}</div><a class="btn s" href="#/job/${j.id}">View Job</a> <button class="btn s g" onclick="toggleSave(${j.id})">${S.saved.has(j.id)?"★ Saved":"☆ Save"}</button></div>`}
+function toggleSave(id){S.saved.has(id)?S.saved.delete(id):S.saved.add(id);route()}
+const PEND=new Set();
+function apply(id){PEND.delete(id);if(!S.user)return location.hash="#/login";S.applied[id]=0;route()}
+function advance(id){if(S.applied[id]<4)S.applied[id]++;route()}
+function completion(){const p=S.p,f=[S.user&&S.user.name,p.skills.length,p.exp!==""&&p.exp>=0&&S.user,p.loc,p.type,p.sal];return Math.round(100*f.filter(Boolean).length/f.length)}
+function eye(id,b){const i=$("#"+id);i.type=i.type==="password"?"text":"password";b.textContent=i.type==="password"?"👁":"🙈"}
+function fieldErr(id,m){const w=$("#"+id).closest(".fw");w.classList.toggle("bad",!!m);w.querySelector(".msg").textContent=m||""}
+function strength(){const v=$("#ap").value;let n=0;if(v.length>=8)n++;if(/[A-Z]/.test(v)&&/[a-z]/.test(v))n++;if(/\d/.test(v))n++;if(/[^A-Za-z0-9]/.test(v))n++;
+ document.querySelectorAll("#sm i").forEach((b,i)=>b.style.background=i<n?["#ef4444","#f59e0b","#22c55e","#16a34a"][n-1]:"");$("#st").textContent=v?"Password strength: "+["Weak","Fair","Good","Strong"][Math.max(0,n-1)]:""}
+function auth(kind){const reg=kind==="reg",e=$("#ae").value.trim(),pw=$("#ap").value;let ok=true;
+ const n=reg?$("#an").value.trim():e.split("@")[0];
+ if(reg){const g=n.length>=2;fieldErr("an",g?"":"Please enter your full name.");ok=ok&&g}
+ const em=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);fieldErr("ae",em?"":"Enter a valid email address.");ok=ok&&em;
+ const pk=pw.length>=8;fieldErr("ap",pk?"":"Password must be at least 8 characters.");ok=ok&&pk;
+ if(reg){const m=$("#ac").value===pw&&pk;fieldErr("ac",m?"":"Passwords do not match.");ok=ok&&m;const t=$("#at").checked;$("#tm").textContent=t?"":"Please accept the terms to continue.";ok=ok&&t}
+ if(!ok)return;const b=$("#sub");b.classList.add("load");b.textContent=reg?"Creating account":"Logging in";
+ setTimeout(()=>{S.user={name:n,email:e};HIST.pop();location.hash="#/dashboard"},700)}
+function authPage(reg){
+ const f=(id,l,t,i,p,a,pw)=>`<div class="fw"><label for="${id}">${l}</label><div class="inp"><span class="ii">${i}</span><input id="${id}" type="${t}" placeholder="${p}" autocomplete="${a}"${id==="ap"&&reg?' oninput="strength()"':""}>${pw?`<button type="button" class="eye" onclick="eye('${id}',this)" aria-label="Show or hide password">👁</button>`:""}</div><div class="msg" role="alert"></div></div>`;
+ const k=reg?"reg":"log";
+ return `<div class="auth"><aside class="ap-side"><div><h2>${reg?"Start your career journey":"Welcome back"}</h2><p>${reg?"Create a free profile and get roles matched to your skills.":"Log in to see your matches, missing skills and roadmap."}</p><ul><li>Personalized role recommendations</li><li>See why each role matches you</li><li>Know exactly which skills to learn</li></ul></div></aside>
+ <section class="ac" onkeydown="if(event.key==='Enter')auth('${k}')"><h2>${reg?"Create your account":"Log in"}</h2><p class="mu" style="margin:0 0 6px">${reg?"It only takes a minute.":"Enter your details to continue."}</p>
+ ${reg?f("an","Full name","text","👤","Your full name","name"):""}${f("ae","Email address","email","✉️","you@example.com","email")}${f("ap","Password","password","🔒",reg?"At least 8 characters":"Your password",reg?"new-password":"current-password",1)}
+ ${reg?`<div class="sm" id="sm"><i></i><i></i><i></i><i></i></div><div class="mu" id="st" style="font-size:.78rem;margin-top:4px"></div>${f("ac","Confirm password","password","🔒","Re-enter your password","new-password",1)}<label class="chk"><input type="checkbox" id="at"> I agree to the terms of use</label><div class="msg" id="tm"></div>`:""}
+ <button class="btn sub" id="sub" onclick="auth('${k}')">${reg?"Create account":"Log in"}</button>
+ <p class="mu" style="text-align:center;margin:16px 0 0">${reg?'Already have an account? <a href="#/login">Log in</a>':'New to JobMatch AI? <a href="#/register">Create an account</a>'}</p>
+ <p class="mu" style="text-align:center;font-size:.72rem;margin:6px 0 0">Demo only: no real account is created.</p></section></div>`}
+function saveProfile(){S.p={skills:$("#pk").value.split(",").map(s=>s.trim()).filter(Boolean),exp:+$("#pe").value||0,loc:$("#pl").value,type:$("#pt").value,sal:$("#ps").value};$("#pok").textContent="Profile saved ✓";setTimeout(()=>{location.hash="#/recommended"},600)}
+function jobsList(){const q=$("#q").value.toLowerCase(),l="",m="",t=$("#ft").value;$("#jlive").innerHTML=$("#q").value.trim()?liveLinks($("#q").value.trim(),curLoc()):"";
+ const L=J.map(score).filter(j=>(!q||(j.title+j.company+j.skills.join()).toLowerCase().includes(q))&&(!l||j.loc===l)&&(!m||j.mode===m)&&(!t||j.type===t)).sort((a,b)=>b.pct-a.pct);
+ $("#jl").innerHTML=L.length?L.map(j=>card(j)).join(""):'<div class="card empty">No jobs found. Try clearing filters.</div>'}
+const opts=(arr,label)=>`<option value="">${label}</option>`+[...new Set(arr)].sort().map(v=>`<option>${v}</option>`).join("");
+const guard=()=>{if(!S.user){HIST.pop();location.hash="#/login";return true}};
+
+const SK="Python,Java,JavaScript,TypeScript,SQL,HTML,CSS,React,Angular,Node.js,Flask,Django,Spring Boot,C++,PHP,AWS,Azure,Docker,Kubernetes,Git,Linux,MongoDB,MySQL,PostgreSQL,REST API,Pandas,NumPy,Scikit-learn,TensorFlow,Machine Learning,Data Analysis,Excel,Power BI,Tableau,Figma,CI/CD,Selenium,Agile".split(",");
+const AL={js:"JavaScript",reactjs:"React","react.js":"React",nodejs:"Node.js",node:"Node.js",ml:"Machine Learning",postgres:"PostgreSQL",sklearn:"Scikit-learn",rest:"REST API",k8s:"Kubernetes"};
+const esc=s=>s.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&");
+const PAT=[...SK.map(s=>[s.toLowerCase(),s]),...Object.entries(AL)].map(([k,v])=>[new RegExp("(?<![a-z0-9+#])"+esc(k)+"(?![a-z0-9+#])"),v]);
+const extractSkills=t=>{const l=t.toLowerCase();return [...new Set(PAT.filter(([r])=>r.test(l)).map(p=>p[1]))]};
+const FAM=[[/data/i,"Data & Analytics"],[/devops/i,"DevOps & Cloud"],[/qa/i,"Quality Engineering"],[/frontend/i,"Frontend"],[/full stack/i,"Full Stack"],[/./,"Backend"]];
+const fam=j=>FAM.find(f=>f[0].test(j.title))[1];
+const PATH={Backend:["Junior Developer","Backend Engineer","Senior Engineer","Tech Lead / Architect"],Frontend:["Junior UI Developer","Frontend Engineer","Senior Frontend","UI Architect"],"Full Stack":["Associate Developer","Full Stack Engineer","Senior Full Stack","Engineering Manager"],"Data & Analytics":["Data Analyst","Data Scientist","Senior Data Scientist","ML Lead"],"DevOps & Cloud":["Cloud Support Engineer","DevOps Engineer","Senior DevOps / SRE","Platform Architect"],"Quality Engineering":["QA Tester","Automation Engineer","SDET Lead","QA Manager"]};
+let RF=null,RBUSY=false,RERR="";
+function pickResume(f){RERR="";if(!f)return;if(!(f.type==="application/pdf"||/\.(pdf|txt)$/i.test(f.name)))RERR="Please upload a PDF (or TXT) resume.";else if(f.size>5*1024*1024)RERR="File too large (max 5 MB).";else{RF=f;S.done=false}route()}
+async function readResume(f){if(/\.txt$/i.test(f.name))return f.text();const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let t="";for(let p=1;p<=Math.min(pdf.numPages,10);p++){const c=await(await pdf.getPage(p)).getTextContent();t+=c.items.map(i=>i.str).join(" ")+" "}return t}
+async function analyseResume(){RBUSY=true;RERR="";route();
+ try{pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  const [t]=await Promise.all([readResume(RF),new Promise(r=>setTimeout(r,1200))]);if(t.trim().length<30)throw 0;
+  const sk=extractSkills(t),y=[...t.toLowerCase().matchAll(/(\d+(?:\.\d+)?)\+?\s*(?:years|yrs)/g)].map(x=>+x[1]),low=t.toLowerCase(),loc=CITIES.find(l=>low.includes(l.toLowerCase()));
+  S.p.skills=[...new Set([...S.p.skills,...sk])];if(y.length)S.p.exp=Math.max(...y);if(loc&&!S.p.loc)S.p.loc=loc;S.done=true}
+ catch(e){RERR="Could not read text from this file. Scanned/image PDFs are not supported."}RBUSY=false;route()}
+function bindResume(){const d=$("#rd"),i=$("#rf");$("#rb").onclick=e=>{e.stopPropagation();i.click()};d.onclick=()=>i.click();i.onchange=()=>pickResume(i.files[0]);
+ ["dragenter","dragover"].forEach(t=>d.addEventListener(t,e=>{e.preventDefault();d.classList.add("over")}));["dragleave","drop"].forEach(t=>d.addEventListener(t,e=>{e.preventDefault();d.classList.remove("over")}));d.addEventListener("drop",e=>pickResume(e.dataTransfer.files[0]))}
+function resumePage(){
+ const h=`<h2>Resume Analysis</h2><div class="card"><div class="drop" id="rd" tabindex="0"><div style="font-size:2.4rem">📄</div><h3>Upload your Resume (PDF)</h3><div class="mu">Drag &amp; drop here, or</div><br><button class="btn" type="button" id="rb">Browse File</button><input type="file" id="rf" accept=".pdf,.txt,application/pdf" hidden></div>${RERR?`<p style="color:var(--bad)">${RERR}</p>`:""}${RF?`<p style="margin:12px 0 0"><span class="chip have">📎 ${RF.name}</span></p>${RBUSY?'<p class="mu"><b>Analyzing your resume and finding the best job matches…</b></p>':'<p><button class="btn" onclick="analyseResume()">Find Jobs</button></p>'}`:""}</div>`;
+ if(!S.done)return h+'<p class="mu">Results appear after you upload a resume and click Find Jobs. Your file is read in your browser and is not uploaded anywhere.</p>';
+ const R=recs().filter(j=>j.pct>=15),fams={};R.forEach(j=>{const f=fam(j);if(!fams[f]||j.pct>fams[f].pct)fams[f]=j});
+ const roles=Object.entries(fams).sort((a,b)=>b[1].pct-a[1].pct).slice(0,4),miss={};R.slice(0,5).forEach(j=>j.x.forEach(s=>miss[s]=(miss[s]||0)+1));const ms=Object.keys(miss).sort((a,b)=>miss[b]-miss[a]);
+ return h+`<div class="card"><h3>✅ Skills detected</h3>${S.p.skills.map(s=>`<span class="chip have">${s}</span>`).join("")||"None detected"}<div class="mu" style="margin-top:6px">Experience: ${S.p.exp} yrs · Location: ${S.p.loc||"not found"}. These were saved to your profile.</div></div>
+ <div class="g3"><div class="card"><h3>🎯 Matching job roles</h3>${roles.map(([f,j])=>`<div><div class="top"><b>${f}</b><span class="pct" style="font-size:1rem">${j.pct}%</span></div><div class="bar"><i style="width:${j.pct}%"></i></div></div>`).join("")||'<span class="mu">No matches yet.</span>'}</div>
+ <div class="card"><h3>⚠️ Missing skills</h3>${ms.slice(0,10).map(s=>`<span class="chip miss">${s}</span>`).join("")||"<span class='mu'>Nothing missing 🎉</span>"}<div style="margin-top:8px"><a class="btn s" href="#/roadmap">See learning roadmap</a></div></div></div>
+ <h3>🚀 Career opportunities</h3>${roles.slice(0,2).map(([f])=>`<div class="card"><b>${f} career path</b><div class="steps" style="margin-top:8px">${PATH[f].map(x=>`<span>${x}</span>`).join("")}</div></div>`).join("")}
+ ${R[0]?liveLinks(R[0].title,curLoc())+portals(R[0].company):""}<h3>Matching roles</h3>${R.slice(0,6).map(j=>card(j)).join("")||'<div class="card empty">No matching jobs yet.</div>'}`}
+const HIST=[];let goingBack=false;
+function trackNav(){const h=location.hash||"#/";if(goingBack){goingBack=false;return}if(HIST[HIST.length-1]!==h)HIST.push(h)}
+function goBack(){if(HIST.length>1){HIST.pop();const prev=HIST[HIST.length-1];if(location.hash===prev){route();return}goingBack=true;location.hash=prev}else location.hash="#/"}
+const isDark=()=>((document.documentElement.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"))==="dark");
+function themeLbl(){$("#thb").textContent=isDark()?"☀️ Light mode":"🌙 Dark mode"}
+function toggleTheme(){document.documentElement.dataset.theme=isDark()?"light":"dark";themeLbl()}
+function initReveal(){document.querySelectorAll(".how,.feat").forEach(box=>{const all=()=>box.querySelectorAll(".hs,.fs").forEach(e=>e.classList.add("in"));
+ if(!("IntersectionObserver" in window))return all();const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){all();io.disconnect()}},{threshold:.15});io.observe(box)})}
+const P={
+resume:resumePage,
+"":()=>`<section class="hero"><div><h1>Find Jobs That <em>Match Your Skills</em></h1><p>Build your profile, discover relevant opportunities, and understand exactly why each job matches your career.</p><a class="btn" href="#/jobs">Find Jobs</a> <a class="btn g" href="#/register">Create Profile</a> <a class="btn g" href="#/resume">📄 Upload Resume</a></div>
+<svg viewBox="0 0 400 300" role="img" aria-label="Job search illustration"><rect x="30" y="40" width="240" height="170" rx="16" fill="var(--soft)"/><rect x="50" y="62" width="150" height="14" rx="7" fill="var(--pr)"/><rect x="50" y="90" width="200" height="10" rx="5" fill="var(--bd)"/><rect x="50" y="110" width="170" height="10" rx="5" fill="var(--bd)"/><rect x="50" y="145" width="60" height="22" rx="11" fill="var(--okb)"/><rect x="118" y="145" width="60" height="22" rx="11" fill="var(--okb)"/><rect x="186" y="145" width="60" height="22" rx="11" fill="var(--badb)"/><rect x="200" y="150" width="170" height="110" rx="16" fill="var(--card)" stroke="var(--pr)" stroke-width="3"/><circle cx="250" cy="195" r="22" fill="var(--pr)"/><text x="250" y="201" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">92%</text><rect x="285" y="182" width="70" height="10" rx="5" fill="var(--bd)"/><rect x="285" y="202" width="50" height="10" rx="5" fill="var(--bd)"/></svg></section>
+<div class="how-h"><h2>How It Works</h2><p>From resume to application in five simple steps. Click any step to start.</p></div>
+<div class="how">${[["👤","Create your profile","Sign up and add your skills, experience and preferences.","#/register"],["📄","Upload your resume","Drop in a PDF and we read your skills for you.","#/resume"],["🧠","Analyze your skills","See what you have, what is missing and your best-fit roles.","#/resume"],["🎯","Get personalized job recommendations","Ranked roles with a clear reason for each match.","#/recommended"],["🚀","Apply and track applications","Apply on official sites, then follow every stage.","#/applications"]].map((x,i)=>`<div class="hs" style="--i:${i}"><a class="hc" href="${x[3]}"><span class="num">STEP ${i+1}</span><div class="ico">${x[0]}</div><b>${x[1]}</b><div class="d">${x[2]}</div><span class="go">Get started →</span></a></div>`).join("")}</div>
+<div class="how-h" style="margin-top:46px"><h2>Everything You Need to Land the Right Job</h2><p>Powerful tools in one place. Click any feature to try it.</p></div>
+<div class="feat">${[["🎯","AI Job Recommendations","Roles ranked by a transparent weighted score.","#/recommended"],["📄","Resume Analysis","Upload a PDF and we extract your skills instantly.","#/resume"],["🧩","Skill Matching","See exactly which skills match each role.","#/jobs"],["🔍","Job Search","Search roles and open live listings in one click.","#/jobs"],["📋","Application Tracking","Follow every application from applied to selected.","#/applications"],["📉","Skill Gap Analysis","Spot missing skills for the roles you want.","#/resume"],["🗺️","Career Roadmap","A step-by-step plan to learn what is missing.","#/roadmap"],["📊","Personalized Dashboard","Your progress, matches and next steps at a glance.","#/dashboard"]].map((f,i)=>`<div class="fs" style="--i:${i}"><a class="fc" href="${f[3]}"><div class="fi">${f[0]}</div><h3>${f[1]}</h3><div class="d">${f[2]}</div><span class="ex">Explore →</span></a></div>`).join("")}</div>
+<div class="g3" style="margin:28px 0">${[["10,000+","Jobs"],["5,000+","Users"],["1,500+","Companies"],["3,200+","Applications tracked"]].map(s=>`<div class="card stat"><b>${s[0]}</b>${s[1]}</div>`).join("")}</div><div class="mu" style="text-align:center">Statistics are demo values.</div>`,
+jobs:()=>`<h2>Browse Jobs</h2><div class="card"><div class="row"><input id="q" placeholder="Search a role or skill, e.g. Python developer" oninput="jobsList()"><input id="city" placeholder="City (e.g. Hyderabad)" value="${S.p.loc||''}" oninput="jobsList()"><select id="ft" oninput="jobsList()">${opts(J.map(j=>j.type),"All types")}</select></div></div><div id="jlive"></div><div id="jl"></div>${S.p.skills.length?"":'<div class="mu">Add skills in <a href="#/profile" style="color:var(--pr)">My Profile</a> to see match scores.</div>'}`,
+job:id=>{const j=J[id]&&score(J[id]);if(!j)return '<div class="card empty">Job not found.</div>';const a=S.applied[j.id];return `<a href="#/jobs" class="mu">← Back to jobs</a><div class="card" style="margin-top:10px"><div class="top"><div><h2 style="margin:0">${j.title}</h2><div class="mu">Commonly hired by: ${j.company} · ${j.exp}+ yrs experience</div></div><div class="pct">${S.p.skills.length?j.pct+"%":""}</div></div><p>${j.desc}</p><div>${chips(j)}</div>${S.p.skills.length?`<h3 style="margin-top:14px">Why this job?</h3>${j.why.map(w=>`<div class="have chip">✓ ${w}</div><br>`).join("")||'<span class="mu">No strong matches yet.</span>'}<h3 style="margin-top:14px">Missing skills</h3>${j.x.map(s=>`<span class="chip miss">${s}</span>`).join("")||"<span class='mu'>None. You are a strong fit.</span>"}`:""}<div style="margin-top:16px">${a!=null?`<span class="badge">Applied · ${STAGES[a]}</span>`:`<button class="btn g" onclick="apply(${j.id})">Mark as applied</button>`} <button class="btn g" onclick="toggleSave(${j.id})">${S.saved.has(j.id)?"★ Saved":"☆ Save"}</button></div></div>${liveLinks(j.title,curLoc())}${portals(j.company)}`},
+login:()=>authPage(false),
+register:()=>authPage(true),
+dashboard:()=>{if(guard())return"";const r=recs().slice(0,3),miss={};recs().slice(0,5).forEach(j=>j.x.forEach(s=>miss[s]=(miss[s]||0)+1));const top=Object.keys(miss).sort((a,b)=>miss[b]-miss[a]).slice(0,8),c=completion();
+ return `<h2>Welcome back, ${S.user.name} 👋</h2><div class="g3"><div class="card stat"><b>${c}%</b>Profile completion<div class="bar"><i style="width:${c}%"></i></div>${c<100?'<a href="#/profile" class="mu" style="color:var(--pr)">Complete profile →</a>':""}</div><div class="card stat"><b>${S.saved.size}</b>Saved jobs</div><div class="card stat"><b>${Object.keys(S.applied).length}</b>Applications</div></div>
+ ${S.p.skills.length?`<h3>Top recommendations</h3>${r.map(j=>card(j)).join("")}<div class="card"><h3>Skill gaps across your top matches</h3>${top.map(s=>`<span class="chip miss">${s}</span>`).join("")||"None 🎉"}<div style="margin-top:8px"><a class="btn s" href="#/roadmap">View Career Roadmap</a></div></div>`:'<div class="card empty">Add your skills to get recommendations.<br><br><a class="btn" href="#/profile">Set up profile</a></div>'}`},
+profile:()=>{if(guard())return"";const p=S.p;return `<h2>My Profile</h2><div class="card"><label>Skills (comma-separated)</label><input id="pk" value="${p.skills.join(", ")}" placeholder="Python, SQL, Flask"><div class="row"><div><label>Experience (years)</label><input id="pe" type="number" min="0" step="0.5" value="${p.exp}"></div><div><label>Preferred location</label><input id="pl" placeholder="e.g. Hyderabad"></div></div><div class="row"><div><label>Job type</label><select id="pt">${opts(J.map(j=>j.type),"Any")}</select></div><div><label>Expected salary (LPA)</label><input id="ps" value="${p.sal}"></div></div><p class="mu"><a href="#/resume" style="color:var(--pr)">Upload your resume</a> to fill skills, experience and location automatically.</p><button class="btn" onclick="saveProfile()">Save profile</button> <span class="mu" id="pok"></span></div>`},
+recommended:()=>{if(guard())return"";return S.p.skills.length?`<h2>Recommended Jobs</h2>${recs().filter(j=>j.pct>=20).map(j=>`${card(j)}<div class="mu" style="margin:-8px 0 14px 4px">Why: ${j.why.slice(0,4).join(" · ")||"—"}</div>`).join("")||'<div class="card empty">No strong matches yet. Add more skills.</div>'}`:'<div class="card empty">Add skills in your profile first.<br><br><a class="btn" href="#/profile">Go to profile</a></div>'},
+saved:()=>{if(guard())return"";const L=[...S.saved].map(id=>score(J[id]));return `<h2>Saved Jobs</h2>${L.map(j=>card(j)).join("")||'<div class="card empty">No saved jobs yet.</div>'}`},
+applications:()=>{if(guard())return"";const ids=Object.keys(S.applied);return `<h2>Application Tracker</h2>${ids.map(id=>{const j=J[id],a=S.applied[id];return `<div class="card"><b>${j.title}</b> <span class="mu">· ${j.company}</span><div class="steps">${STAGES.map((s,i)=>`<span class="${i<=a?"d":""}">${s}</span>`).join("")}</div><button class="btn s g" onclick="advance(${id})">Advance status (demo)</button></div>`}).join("")||'<div class="card empty">You have not applied to any jobs yet.</div>'}`},
+roadmap:()=>{if(guard())return"";const cnt={};recs().slice(0,5).forEach(j=>j.x.forEach(s=>cnt[s]=(cnt[s]||0)+1));const sk=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+ if(!S.p.skills.length)return '<div class="card empty">Add skills to generate your roadmap.</div>';
+ return `<h2>Your Career Roadmap</h2>${[["Weeks 1–4",sk.slice(0,2)],["Weeks 5–8",sk.slice(2,4)],["Weeks 9–12",sk.slice(4,6)]].map(([w,a])=>a.length?`<div class="card"><h3>${w}</h3>${a.map(s=>`<div style="margin-bottom:8px"><b>${s}</b> <span class="badge">needed by ${cnt[s]} of top 5 jobs</span><div class="mu">${LEARN[s]||"Follow a beginner tutorial and build a small project."}</div></div>`).join("")}</div>`:"").join("")||'<div class="card empty">You already have the key skills for your top jobs 🎉</div>'}`}};
+function route(){trackNav();const h=location.hash.replace(/^#\/?/,""),[pg,arg]=h.split("/"),k=pg in P?pg:"";
+ const links=[["","Home"],["jobs","Jobs"],["resume","📄 Resume"]].concat(S.user?[["dashboard","Dashboard"],["recommended","Recommended"],["saved","Saved"],["applications","Applications"],["roadmap","Roadmap"],["profile","Profile"]]:[]);
+ $("#backbar").innerHTML=k!==""||HIST.length>1?'<button class="back" onclick="goBack()" aria-label="Go back to previous page">← Back</button>':"";$("#nav").innerHTML=`<a class="logo" href="#/">JobMatch <b>AI</b></a>`+links.map(l=>`<a href="#/${l[0]}" class="${l[0]===k||(pg==="job"&&l[0]==="jobs")?"on":""}">${l[1]}</a>`).join("")+(S.user?`<a href="#/" onclick="S.user=null">Logout</a>`:`<a href="#/login">Login</a><a class="btn s" href="#/register" style="color:#fff">Register</a>`);
+ $("#app").innerHTML=(pg==="job"?P.job(+arg):P[k]())||"";
+ if(k==="jobs")jobsList();if(k==="resume")bindResume();if(k==="")initReveal();if(k==="profile"&&S.user){$("#pl").value=S.p.loc;$("#pt").value=S.p.type}window.scrollTo(0,0)}
+addEventListener("hashchange",route);route();themeLbl();$("#yr").textContent=new Date().getFullYear();
+</script></body></html>
